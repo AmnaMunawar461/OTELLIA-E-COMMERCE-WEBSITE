@@ -1,0 +1,169 @@
+﻿{% extends 'main.html' %}
+
+{% block content %}
+
+{% load static %}
+{% load cart %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <style>
+        h6 {
+            text-align: left;
+           }
+
+        .row {
+            display: flex;
+        }
+
+        .column {
+            float: left;
+            width: 50%;
+        }
+
+        .card {
+            background-color: whitesmoke;
+            height: 100vh;
+        }
+
+            .card card-body {
+                background-color: whitesmoke;
+                height: 100vh;
+            }
+
+        .split {
+            height: 100%;
+            width: 50%;
+            position: absolute;
+            z-index: -100000;
+            top: 29px;
+            padding-bottom: 19px;
+            overflow-x: hidden;
+            padding-top: 20px;
+        }
+
+        .left {
+            width: 20%;
+            left: 0;
+            background-color: whitesmoke;
+        }
+
+        body {
+            background-color: whitesmoke;
+        }
+
+        .right {
+            width: 80%;
+            right: 0;
+            background-color: whitesmoke;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="split left">
+        <div class="row">
+            <div class="col">
+                <div class="card card-body">
+
+                    <form method="get">
+                        {{filter.form}}
+
+                        <button class="btn btn-primary" type="submit">Search</button>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+    <div class="split right">
+        <div class="container">
+            <div class="row">
+                {% for shoe in shoes %}
+                {% if shoe.genderno == 1 %}
+
+                <div class="col-lg-4">
+                    <br />
+                    <br />
+                    <img src="{{shoe.img.url}}" height="250" width="280" />
+                    <br />
+                    <div class="description">
+                        <br />
+                        <div class="row">
+                            <div class="column">
+                                <h6 class="des">{{shoe.description}}</h6>
+                                <br />
+                            </div>
+                            <div class="column">
+                                <strong>Rs: {{shoe.price}}</strong>
+
+                            </div>
+
+                        </div>
+
+                        <div>
+                            <div class="row  no-gutters">
+                                {% if shoe|is_in_cart:request.session.cart %}
+                                <div class="row">
+                                    <form class="col-lg-4" action="1#{{shoe.id}}" method="post">
+                                        {% csrf_token %}
+                                        <input hidden type="text" name="id" value="{{shoe.id}}" />
+
+                                        <input hidden type="text" name='remove' value='False' />
+                                        <input type="submit" class="btn btn-outline-primary" value="+" />
+
+                                    </form>
+                                    <div class="text-center col-lg-4 color">{{shoe | cart_quantity:request.session.cart}}</div>
+                                    <form class="col-lg-4" action="1#{{shoe.id}}" method="post">
+                                        {% csrf_token %}
+                                        <input hidden type="text" name="id" value="{{shoe.id}}" />
+
+                                        <input hidden type="text" name='remove' value='True' />
+                                        <input type="submit" class="btn btn-outline-primary" value="-" />
+
+                                    </form>
+                                </div>
+                                {% else %}
+                                <form action="1#{{shoe.id}}" method="post">
+
+                                    {% csrf_token %}
+                                    <input hidden type="text" name="id" value="{{shoe.id}}" />
+                                    <div class="column">
+                                        <input hidden type="text" name='remove' value='False' />
+                                        <input type="submit" class="btn btn-outline-primary" value="Add to Cart" />
+                                    </div>
+                                </form>
+                                {% endif %}
+                            </div>
+
+                        </div>
+                        <br />
+                        <br />
+                        <br />
+
+                    </div>
+                </div>
+                <br />
+                <br />
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+{% endblock %}

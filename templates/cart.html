@@ -1,0 +1,126 @@
+﻿{% extends 'main.html' %}
+
+{% block content %}
+
+{% load cart %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+    <style>
+        td{
+            font-weight:bold;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <div class="border rounded p-4 m-4">
+
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Sno</th>
+                    <th>Name</th>
+                    <th>View</th>
+
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+
+
+                </tr>
+            </thead>
+            <tbody>
+                <p class="display-4">Cart</p>
+
+                {% for p in products %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td style="color:black">{{p.description}}</td>
+                    <td><img src="{{p.img.url}}" class="rounded-circle" height="80px" /></td>
+
+                    <td style="color:firebrick">Rs {{p.price}}</td>
+                    <td style="color:teal">{{p|cart_quantity:request.session.cart}}</td>
+                    <td style="color:darkgreen">Rs {{p|price:request.session.cart}}</td>
+                    <td></td>
+                </tr>
+                {% endfor %}
+                {% for i in shoes %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td style="color:black">{{i.description}}</td>
+                    <td><img src="{{i.img.url}}" class="rounded-circle" height="80px" /></td>
+
+                    <td style="color:firebrick">Rs {{i.price}}</td>
+                    <td style="color:teal">{{i|cart_quantity:request.session.cart}}</td>
+                    <td style="color:darkgreen">Rs {{i|price:request.session.cart}}</td>
+                    <td></td>
+                </tr>
+                {% endfor %}
+
+                {% for j in watch %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td style="color:black">{{j.description}}</td>
+                    <td><img src="{{j.img.url}}" class="rounded-circle" height="80px" /></td>
+
+                    <td style="color:firebrick">Rs {{j.price}}</td>
+                    <td style="color:teal">{{j|cart_quantity:request.session.cart}}</td>
+                    <td style="color:darkgreen">Rs {{j|price:request.session.cart}}</td>
+                    <td></td>
+                </tr>
+                {% endfor %}
+                {% for p in cloth %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td style="color:black">{{p.description}}</td>
+                    <td><img src="{{p.img.url}}" class="rounded-circle" height="80px" /></td>
+
+                    <td style="color:firebrick">Rs {{p.price}}</td>
+                    <td style="color:teal">{{p|cart_quantity:request.session.cart}}</td>
+                    <td style="color:darkgreen">Rs {{p|price:request.session.cart}}</td>
+                    <td></td>
+                </tr>
+                {% endfor %}
+
+                {% for w in popular %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td style="color:black">{{w.description}}</td>
+                    <td><img src="{{w.img.url}}" class="rounded-circle" height="80px" /></td>
+
+                    <td style="color:firebrick">Rs {{w.price}}</td>
+                    <td style="color:teal">{{w|cart_quantity:request.session.cart}}</td>
+                    <td style="color:darkgreen">Rs {{w|price:request.session.cart}}</td>
+                    <td></td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+            <tfoot>
+            <th colspan="5">Total</th>
+
+            <th style="color:saddlebrown">Rs {{products|total_cart:request.session.cart}}</th>
+
+            </tfoot>
+        </table>
+        <hr />
+        <div class="m-3 p-3">
+            <a href="checkout" class="btn btn-outline-primary  rounded col-lg-3 float-right">Checkout</a>
+        </div>
+    </div>
+</body>
+</html>
+
+{% endblock %}

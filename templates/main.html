@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+     <style>
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: black;
+        }
+
+        li {
+            float: right;
+        }
+
+            li a {
+                display: block;
+                color: white;
+                text-align: center;
+                padding: 14px 16px;
+                margin-left: 0px;
+                text-decoration: none;
+            }
+
+            li href:hover {
+                background-color: blue;
+                display: inline-block;
+            }
+
+        .dropdown {
+            position: fixed;
+            z-index: 999999999;
+        }
+
+
+        .dropdown-submenu .dropdown-menu {
+            color: orangered;
+            background-color: black;
+            top: 0px;
+            left: 100%;
+            margin-top: -1px;
+        }
+
+        .slidercontainer {
+            width: 940px;
+            position: absolute;
+            z-index: -1000
+        }
+
+        .abc {
+            text-align: center;
+            text-decoration: none;
+            display: block;
+            float: left;
+            font-weight: bold;
+            color: white;
+            letter-spacing: 2px;
+            font-size: 30px;
+            padding-left: 10px;
+            padding-top: 9px;
+            padding-bottom: 9px;
+            margin-bottom: 0px;
+        }
+
+        .test {
+            background-color: black;
+            font-color: black;
+        }
+
+        .dropdown {
+            
+            display: inline-block;
+        }
+
+        .dropdown-submenu {
+            position: relative;
+        }
+
+        .dropdown-item :hover {
+            color: bisque;
+        }
+
+        .dropdown-submenu .dropdown-menu {
+            top: 0;
+            left: 100%;
+            margin-top: -1px;
+        }
+    </style>
+
+</head>
+<body>
+
+    <ul>
+
+        <li class="abc">OTTELLIA</li>
+        {% if user.is_authenticated %}
+        <li><a class="btn btn-info m-3" href="/accounts/logout">Logout</a></li>
+        <li>
+            <h6 style="color:white;font-weight:bold;text-align:center;">Hello {{user.user_name}}</h6>
+        </li>
+        <li><a class="btn btn-info m-3" href="/accounts/cart">Cart</a></li>
+        {% else %}
+        <li><a class="btn btn-info m-3" href="/accounts/cart">Cart</a></li>
+        <li><a class="btn btn-info m-3" href="/accounts/login">Login</a></li>
+        <li><a class="btn btn-info m-3" href="/accounts/register">Register</a></li>
+        {% endif %}
+
+
+        <div class="dropdown" style="position:absolute;z-index:99999999">
+            <button class="btn btn-info dropdown-toggle m-3 p-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Category
+            </button>
+            <div class="dropdown-menu" style="background-color:white;color:black;" aria-labelledby="dropdownMenuButton">
+
+                <li><a class="dropdown-item" style="background-color:white;color:black;" href="/category/3">Watches</a></li>
+                <li class="dropdown-submenu">
+                    <a class="test pl-4" href="#" style="text-decoration:none; background-color:white;color:black;">Dresses<span class="caret"</span></a>
+                    <ul class="dropdown-menu" style="background-color:white;color:black;" aria-labelledby="dropdownMenuButton">
+                        <li><a class="dropdown-item" style="background-color:white;color:black;" tabindex="-1" href="/category/5">Female</a></li>
+                        <li><a class="dropdown-item" style="background-color:white;color:black;" tabindex="-1" href="/category/4">Male</a></li>
+                    </ul>
+                </li>
+
+                <li><a class="dropdown-item" style="background-color:white;color:black;" href="/category/6">Perfumes</a></li>
+                <li class="dropdown-submenu">
+                    <a class="test pl-4" href="#" style="text-decoration:none; background-color:white;color:black;">Shoes<span class="caret"</span></a>
+                    <ul class="dropdown-menu" style="background-color:white;color:black;" aria-labelledby="dropdownMenuButton">
+                        <li><a class="dropdown-item" style="background-color:white;color:black;" tabindex="-1" href="/category/2">Female</a></li>
+                        <li><a class="dropdown-item" style="background-color:white;color:black;" tabindex="-1" href="/category/1">Male</a></li>
+                    </ul>
+                </li>
+
+            </div>
+        </div>
+
+        <li><a class="btn btn-info m-3" href="/">Home</a></li>
+    </ul>
+
+    {% block content %}
+    {% endblock %}
+    <script>
+        $(document).ready(function () {
+            $('.dropdown-submenu a.test').on("click", function (e) {
+                $(this).next('ul').toggle();
+                e.stopPropagation();
+                e.preventDefault();
+            });
+        });
+    </script>
+
+</body>
+</html>

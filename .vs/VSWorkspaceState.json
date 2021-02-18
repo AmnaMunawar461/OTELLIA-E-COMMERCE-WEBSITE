@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\accounts",
+    "\\category",
+    "\\static",
+    "\\static\\images",
+    "\\telusko",
+    "\\templates",
+    "\\travello",
+    "\\travello\\migrations",
+    "\\travello\\templatetags"
+  ],
+  "SelectedNode": "\\accounts\\views.py",
+  "PreviewInSolutionExplorer": false
+}

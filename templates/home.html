@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>o World {{class}}</h1>
+<p> {{name}} dont trust to your parents &Aacute; atleast try not to love</p>
+<p>{{name}}:dont worry fucking babe,i dont even know the meaning of this piece of shit</p>
+<form action="add" method="post">
+   {%csrf_token %}
+    Enter 1st Number:<input type="number" name="num1" />
+
+    Enter 2st Number:<input type="number" name="num2" />
+<input type="submit"/>
+
+</form>
+{% endblock %}

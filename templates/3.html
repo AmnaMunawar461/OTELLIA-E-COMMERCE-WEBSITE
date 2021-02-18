@@ -1,0 +1,172 @@
+﻿{% extends 'main.html' %}
+
+{% block content %}
+{% load cart %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <style>
+        h6 {
+            text-align: left;
+        }
+
+        .row {
+            display: flex;
+        }
+
+        .column {
+            float: left;
+            width: 50%;
+        }
+
+        #example1 {
+            border: 1px solid black;
+            padding: 10px;
+            border-collapse: separate;
+            border-spacing: 15px;
+        }
+
+        strong {
+            color: blue
+        }
+
+        .des {
+            color: brown;
+        }
+
+        .split {
+            height: 100%;
+            width: 50%;
+            position: fixed;
+            z-index: 1;
+            padding-bottom: 19px;
+            overflow-x: hidden;
+            padding-top: 20px;
+        }
+
+        .left {
+            width: 20%;
+            left: 0;
+            background-color: whitesmoke;
+        }
+
+        .right {
+            width: 80%;
+            right: 0;
+            background-color: whitesmoke;
+        }
+
+        .card {
+            background-color: whitesmoke;
+            height: 100vh;
+        }
+
+            .card card-body {
+                background-color: whitesmoke;
+                height: 100vh;
+            }
+    </style>
+
+</head>
+<body>
+    <div class="split left">
+
+        <div class="row">
+            <div class="col">
+                <div class="card card-body">
+
+                    <form method="get">
+                        {{filter.form}}
+
+                        <button class="btn btn-primary" type="submit">Search</button>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+
+        <br />
+    </div>
+    <div class="split right">
+
+        <div class="container">
+            <div class="row">
+                {% for watch in watchs %}
+                <div class="col-sm-4">
+
+                    <img src="{{watch.img.url}}" height="270" width="270" />
+                    <div class="description">
+                        <h6>{{watch.description}}</h6>
+                        <br />
+                        <div class="row">
+                            <div class="column">
+                                <h6 class="des">{{watch.description}}</h6>
+                                <br />
+                            </div>
+                            <div class="column">
+                                <strong>Rs: {{watch.price}}</strong>
+
+                            </div>
+
+                        </div>
+
+                        <div>
+                            <div class="row  no-gutters">
+                                {% if watch|is_in_cart:request.session.cart %}
+                                <div class="row">
+                                    <form class="col-lg-4" action="3#{{watch.id}}" method="post">
+                                        {% csrf_token %}
+                                        <input hidden type="text" name="id" value="{{watch.id}}" />
+
+                                        <input hidden type="text" name='remove' value='False' />
+                                        <input type="submit" class="btn btn-outline-primary" value="+" />
+
+                                    </form>
+                                    <div class="text-center col-lg-4 color">{{watch | cart_quantity:request.session.cart}}</div>
+                                    <form class="col-lg-4" action="3#{{watch.id}}" method="post">
+                                        {% csrf_token %}
+                                        <input hidden type="text" name="id" value="{{watch.id}}" />
+
+                                        <input hidden type="text" name='remove' value='True' />
+                                        <input type="submit" class="btn btn-outline-primary" value="-" />
+
+                                    </form>
+                                </div>
+                                {% else %}
+                                <form action="3#{{watch.id}}" method="post">
+
+                                    {% csrf_token %}
+                                    <input hidden type="text" name="id" value="{{watch.id}}" />
+                                    <div class="column">
+                                        <input hidden type="text" name='remove' value='False' />
+                                        <input type="submit" class="btn btn-outline-primary" value="Add to Cart" />
+                                    </div>
+                                </form>
+                                {% endif %}
+                            </div>
+
+                        </div>
+                        <br />
+                        <br />
+                        <br />
+
+
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
+{% endblock %}
